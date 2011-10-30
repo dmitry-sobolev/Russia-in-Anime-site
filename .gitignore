@@ -1,3 +1,6 @@
 assets/*
 framework/*
 old/*
+protected/extensions/*
+protected/runtime/*
+nbproject/*
