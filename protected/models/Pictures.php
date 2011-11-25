@@ -5,7 +5,7 @@
  *
  * The followings are the available columns in table 'pictures':
  * @property integer $PID
- * @property string $titile
+ * @property string $title
  * @property string $path
  *
  * The followings are the available model relations:
@@ -32,7 +32,15 @@ class Pictures extends CActiveRecord
 		return 'pictures';
 	}
 
-	/**
+        public function behaviors() {
+            return array(
+                'CAdvancedArBehavior' => array(
+                    'class' => 'application.extentions.CAdvancedArBehavior',
+                ),
+            );
+        }
+
+        /**
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules()
@@ -40,12 +48,12 @@ class Pictures extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('titile, path', 'required'),
-			array('titile', 'length', 'max'=>255),
+			array('title, path', 'required'),
+			array('title', 'length', 'max'=>255),
 			array('path', 'length', 'max'=>512),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('PID, titile, path', 'safe', 'on'=>'search'),
+			array('PID, title, path', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,9 +65,9 @@ class Pictures extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'articles' => array(self::HAS_MANY, 'Article', 'pictureMain'),
-			'fields' => array(self::HAS_MANY, 'Field', 'picturePreview'),
-			'fieldpics' => array(self::HAS_MANY, 'Fieldpics', 'PID'),
+			'articleMain' => array(self::HAS_ONE, 'Article', 'pictureMain'),
+			'fieldMain' => array(self::HAS_ONE, 'Field', 'picturePreview'),
+			'fields' => array(self::MANY_MANY, 'Fields', 'fieldpics(PID, FID)'),
 		);
 	}
 
@@ -69,9 +77,9 @@ class Pictures extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'PID' => 'Pid',
-			'titile' => 'Titile',
-			'path' => 'Path',
+			'PID' => 'Номер',
+			'title' => 'Имя файла',
+			'path' => 'Файл',
 		);
 	}
 
@@ -87,7 +95,7 @@ class Pictures extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('PID',$this->PID);
-		$criteria->compare('titile',$this->titile,true);
+		$criteria->compare('title',$this->title,true);
 		$criteria->compare('path',$this->path,true);
 
 		return new CActiveDataProvider($this, array(

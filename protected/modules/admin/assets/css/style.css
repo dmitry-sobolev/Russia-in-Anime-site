@@ -1,0 +1,55 @@
+.menu ul {
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+}
+
+.menu li {
+	display: block;
+	float: left;
+	margin: 0;
+	padding: 2px;
+}
+
+.menu li a {
+	padding: 2px;
+}
+
+div.form .row {
+    margin: 2px 20px;
+    padding: 4px;
+}
+
+div.form label {
+    display: inline-block;
+    width: 170px;
+}
+
+div.form select {
+    width: 150px;
+}
+
+.error {
+    padding: 2px;
+}
+
+div.field {
+    background: white;
+    box-shadow: 0 0 10px #ACACAC;
+    margin-bottom: 10px;
+}
+
+div.field h2 {
+    margin-left: 20px;
+}
+
+div.field .delete {
+    float: right;
+    margin: 10px 20px;
+    text-align: right;
+}
+
+div.field .delete label {
+    display: inline;
+    margin-right: 10px; 
+}

@@ -29,7 +29,15 @@ class Studio extends CActiveRecord
 		return 'studio';
 	}
 
-	/**
+        public function behaviors() {
+            return array(
+                'CAdvancedArBehavior' => array(
+                    'class' => 'application.extensions.CAdvancedArBehavior',
+                ),
+            );
+        }
+
+        /**
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules()
@@ -63,8 +71,8 @@ class Studio extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'SID' => 'Sid',
-			'title' => 'Title',
+			'SID' => 'Номер',
+			'title' => 'Название',
 		);
 	}
 

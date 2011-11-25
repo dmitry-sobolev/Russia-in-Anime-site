@@ -29,7 +29,15 @@ class Tags extends CActiveRecord
 		return 'tags';
 	}
 
-	/**
+        public function behaviors() {
+            return array(
+                'CAdvancedArBehavior' => array(
+                    'class' => 'application.extensions.CAdvancedArBehavior',
+                ),
+            );
+        }
+
+        /**
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules()
@@ -53,7 +61,7 @@ class Tags extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'fieldtags' => array(self::HAS_MANY, 'Fieldtags', 'TID'),
+			'fields' => array(self::MANY_MANY, 'Fields', 'fieldtags(TID, FID)'),
 		);
 	}
 
@@ -63,8 +71,8 @@ class Tags extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'TID' => 'Tid',
-			'title' => 'Title',
+			'TID' => 'Номер',
+			'title' => 'Название',
 		);
 	}
 

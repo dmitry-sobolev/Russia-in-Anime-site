@@ -36,7 +36,15 @@ class Field extends CActiveRecord
 		return 'field';
 	}
 
-	/**
+        public function behaviors() {
+            return array(
+                'CAdvancedArBehavior' => array(
+                    'class' => 'application.extentions.CAdvancedArBehavior',
+                ),
+            );
+        }
+
+        /**
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules()
@@ -63,8 +71,8 @@ class Field extends CActiveRecord
 		return array(
 			'article0' => array(self::BELONGS_TO, 'Article', 'article'),
 			'picturePreview0' => array(self::BELONGS_TO, 'Pictures', 'picturePreview'),
-			'fieldpics' => array(self::HAS_MANY, 'Fieldpics', 'FID'),
-			'fieldtags' => array(self::HAS_MANY, 'Fieldtags', 'FID'),
+			'pictures' => array(self::MANY_MANY, 'Pictures', 'fieldpics(FID, PID)'),
+			'tags' => array(self::MANY_MANY, 'Tags', 'fieldtags(FID, TID)'),
 		);
 	}
 
@@ -74,12 +82,13 @@ class Field extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'FID' => 'Fid',
-			'picturePreview' => 'Picture Preview',
-			'textPreview' => 'Text Preview',
-			'text' => 'Text',
-			'isBig' => 'Is Big',
-			'article' => 'Article',
+			'FID' => 'Номер',
+			'picturePreview' => 'Картинка в превью',
+			'textPreview' => 'Текст превью',
+			'text' => 'Текст',
+			'isBig' => 'Продолжить?',
+			'article' => 'Стетья',
+                        'tags' => 'Теги',
 		);
 	}
 

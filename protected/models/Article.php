@@ -39,8 +39,13 @@ class Article extends CActiveRecord
 	{
 		return 'article';
 	}
+        
+        public function behaviors() {
+            return array('CAdvancedArBehavior' => array(
+                'class' => 'application.extensions.CAdvancedArBehavior'));
+        }
 
-	/**
+        /**
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules()
@@ -48,7 +53,7 @@ class Article extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('titleMain, titleAdd, titleRus, timeTag, format', 'required'),
+			array('titleMain, titleAdd, timeTag, format', 'required'),
 			array('episodeNum, studio, pictureMain', 'numerical', 'integerOnly'=>true),
 			array('titleMain, titleAdd, titleRus', 'length', 'max'=>100),
 			array('format', 'length', 'max'=>5),
@@ -80,17 +85,17 @@ class Article extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'AID' => 'Aid',
-			'titleMain' => 'Title Main',
-			'titleAdd' => 'Title Add',
-			'titleRus' => 'Title Rus',
+			'AID' => 'Номер',
+			'titleMain' => 'Название',
+			'titleAdd' => 'Альтернативное название',
+			'titleRus' => 'Русское название',
 			'timeTag' => 'Time Tag',
-			'format' => 'Format',
-			'episodeNum' => 'Episode Num',
-			'studio' => 'Studio',
-			'director' => 'Director',
-			'original' => 'Original',
-			'pictureMain' => 'Picture Main',
+			'format' => 'Формат',
+			'episodeNum' => 'Серий',
+			'studio' => 'Студия',
+			'director' => 'Режиссер',
+			'original' => 'Оригинал',
+			'pictureMain' => 'Картинка',
 		);
 	}
 
