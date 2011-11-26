@@ -88,11 +88,18 @@ class ArticleController extends AdminController {
             throw new CHttpException(500, 'Не удалось сохранить статью');
     }
 
-    //TODO: Удаление полей
+    //TODO: Таки, почему она не сохраняет?!
     private function getFieldsArray(&$post, $fields = array()) {
         foreach ($post['Field'] as $fid => $fieldAttributes) {
             if (isset($fieldAttributes['FID']) && $fieldAttributes['FID'] == $fid) {
                 $i = $this->searchObjectByField($fields, 'FID', $fid);
+                
+                if (isset($post['delete'][$fid])) {
+                    Field::model()->deleteByPk($fid);
+                    unset ($fields[$i]);
+                    $i = false;
+                }
+                
                 if ($i !== false){
                     $fields[$i]->attributes = $fieldAttributes;
                 }
