@@ -329,6 +329,8 @@ class Relation extends CWidget {
     }
 
     public function renderBelongsToSelection() {
+        if (isset($this->modelId))
+                $this->field = "[{$this->modelId}]" . $this->field;
         if (strcasecmp($this->style, "dropDownList") == 0)
             echo CHtml::ActiveDropDownList($this->_model, $this->field, $this->getRelatedData(), $this->htmlOptions);
         else if (strcasecmp($this->style, "listbox") == 0)

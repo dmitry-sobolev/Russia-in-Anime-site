@@ -38,6 +38,7 @@
                 'relation' => 'picturePreview0',
                 'showAddButton' => false,
                 'fields' => 'title',
+                'parentObjects' => $field->pictures,
                 'modelId' => $num,
                 'htmlOptions' => array(
                     'options' => array($field->picturePreview => array('selected' => true)),
@@ -60,6 +61,19 @@
         </div>
     </div>
     <div class="span-6 last">
-        
+        <h3>Картинки</h3>
+        <div class="image-items">
+            <?php foreach ($field->pictures as $picture): ?>
+            <div class="image">
+                <?php $imgpath = $picture->path.$picture->title; ?>
+                <?php $thumbpath = $picture->path.'thumbs/thumb200_'.$picture->title; ?>
+                <?php echo CHtml::link(
+                        CHtml::image($thumbpath, $picture->title), 
+                        $imgpath); 
+                ?>
+            </div>
+            <?php endforeach;?>
+        </div>
+        <?php echo CHtml::activeFileField(Pictures::model(), "$num"); ?>
     </div>
 </div>

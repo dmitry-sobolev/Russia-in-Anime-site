@@ -13,7 +13,8 @@ return array(
     'import' => array(
         'application.models.*',
         'application.components.*',
-        'application.extensions.CAdvancedArBehavior'
+        'application.extensions.CAdvancedArBehavior',
+        'application.extensions.EUploadedImage',
     ),
     'modules' => array(
         // uncomment the following to enable the Gii tool
