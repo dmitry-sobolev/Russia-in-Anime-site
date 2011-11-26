@@ -23,12 +23,12 @@
                     $this->widget('zii.widgets.CMenu', array(
                         'items' => array(
                             array('label' => 'Главная', 'url'=>array('default/index')),
-                            array('label' => 'Добавить статью', 'url'=>array('article/add')),
-                            array('label' => 'Найти сатью', 'url' => array('article/manage')),
-                            array('label' => 'Добавить тег', 'url' => array('tags/add')),
-                            array('label' => 'Операции с тегами', 'url' => array('tags/manage')),
-                            array('label' => 'Добавить студию', 'url' => array('studio/add')),
-                            array('label' => 'Найти студию', 'url' => array('studio/manage')),
+                            array('label' => 'Добавить статью', 'url'=>array('article/create')),
+                            array('label' => 'Найти сатью', 'url' => array('article/admin')),
+                            array('label' => 'Добавить тег', 'url' => array('tags/create')),
+                            array('label' => 'Операции с тегами', 'url' => array('tags/admin')),
+                            array('label' => 'Добавить студию', 'url' => array('studio/create')),
+                            array('label' => 'Найти студию', 'url' => array('studio/admin')),
                         ),
                     ));
                     ?>

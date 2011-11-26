@@ -72,6 +72,17 @@ class ArticleController extends AdminController {
             throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
     }
 
+    public function actionAdmin() {
+        $model = new Article('search');
+        $model->unsetAttributes();  // clear any default values
+        if (isset($_GET['Studio']))
+            $model->attributes = $_GET['Studio'];
+
+        $this->render('admin', array(
+            'model' => $model,
+        ));
+    }
+
     public function loadModel($id) {
         $model = Article::model()->findByPk($id);
         if ($model === null)
