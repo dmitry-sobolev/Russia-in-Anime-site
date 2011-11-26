@@ -1,5 +1,6 @@
 assets/*
 framework/*
+images/upload/*
 old/*
 protected/extensions/*
 protected/runtime/*
