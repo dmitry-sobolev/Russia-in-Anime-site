@@ -14,7 +14,7 @@
 	
    </head>
     <body>
-        <div class="container showgrid">
+        <div class="container">
             <div id="header">
                 <!--img src="" alt="" id="logo" /-->
                 <h1><?php echo CHtml::encode(Yii::app()->name); ?></h1>
