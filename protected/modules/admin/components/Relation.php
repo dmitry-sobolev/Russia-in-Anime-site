@@ -316,17 +316,15 @@ class Relation extends CWidget {
 
     public function getListBoxName($ajax = false) {
         if ($ajax) {
-            return sprintf('%s_%s', get_class($this->_model), get_class($this->_relatedModel)
-            );
+            return sprintf('%s_%s', get_class($this->_model), $this->relation);
         } elseif($this->modelId){
             return sprintf('%s[%s][%s]', 
                     get_class($this->_model), 
-                    get_class($this->_relatedModel),
-                    $this->modelId 
+                    $this->modelId, 
+                    $this->relation
             );
         } else {
-            return sprintf('%s[%s]', get_class($this->_model), get_class($this->_relatedModel)
-            );
+            return sprintf('%s[%s]', get_class($this->_model), $this->relation);
         }
     }
 
