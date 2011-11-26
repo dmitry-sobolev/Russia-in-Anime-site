@@ -14,7 +14,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>View Studio #<?php echo $model->SID; ?></h1>
+<h1>Просмотр студии &laquo;<?php echo $model->title; ?>&raquo;</h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
