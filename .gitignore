@@ -3,4 +3,5 @@ framework/*
 old/*
 protected/extensions/*
 protected/runtime/*
+protected/modules/admin/extensions/*
 nbproject/*
