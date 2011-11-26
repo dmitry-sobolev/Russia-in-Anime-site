@@ -2,8 +2,8 @@
 
     <div class="delete">
         <?php if (!$field->isNewRecord): ?>
-            <?php echo CHtml::label('Удалить', "delete[{$field->FID}]"); ?>
-            <?php echo CHtml::checkBox("delete[{$field->FID}]") ?>
+            <?php echo CHtml::label('Удалить', "delete[$num]"); ?>
+            <?php echo CHtml::checkBox("delete[$num]") ?>
         <?php endif; ?>
     </div>
 
@@ -11,7 +11,7 @@
 
     <div class="span-13">
         <div class="row">
-            <?php echo $form->labelEx($field, "[{$field->FID}]tags"); ?>
+            <?php echo $form->labelEx($field, "[$num]tags"); ?>
             <?php $options = array(); ?>
             <?php foreach ($field->tags as $tag): ?>
                 <?php $options[$tag->TID] = array('selected' => true); ?>
@@ -25,38 +25,38 @@
                 'showAddButton' => false,
                 'fields' => 'title',
                 'style' => 'listBox',
-                'modelId' => $field->FID,
+                'modelId' => $num,
                 'htmlOptions' => array(
                     'options' => $options,
                 ),
             )); ?>
         </div>
         <div class="row">
-            <?php echo $form->labelEx($field, "[{$field->FID}]picturePreview"); ?>
+            <?php echo $form->labelEx($field, "[$num]picturePreview"); ?>
             <?php $this->widget('admin.components.Relation', array(
                 'model' => "Field",
                 'relation' => 'picturePreview0',
                 'showAddButton' => false,
                 'fields' => 'title',
-                'modelId' => $field->FID,
+                'modelId' => $num,
                 'htmlOptions' => array(
                     'options' => array($field->picturePreview => array('selected' => true)),
                 ),
             )); ?>
         </div>
         <div class="row">
-            <?php echo $form->labelEx($field, "[{$field->FID}]textPreview"); ?>
-            <?php echo $form->textArea($field, "[{$field->FID}]textPreview"); ?>
+            <?php echo $form->labelEx($field, "[$num]textPreview"); ?>
+            <?php echo $form->textArea($field, "[$num]textPreview"); ?>
         </div>
         <div class="row">
-            <?php echo $form->checkBox($field, "[{$field->FID}]isBig"); ?>
-            <?php echo $form->labelEx($field, "[{$field->FID}]isBig"); ?>
+            <?php echo $form->checkBox($field, "[$num]isBig"); ?>
+            <?php echo $form->labelEx($field, "[$num]isBig"); ?>
             
         </div>
         <div class="row">
-            <?php echo $form->labelEx($field, "[{$field->FID}]text"); ?>
-            <?php echo $form->textArea($field, "[{$field->FID}]text"); ?>
-            <?php echo $form->hiddenField($field, "[{$field->FID}]FID"); ?>
+            <?php echo $form->labelEx($field, "[$num]text"); ?>
+            <?php echo $form->textArea($field, "[$num]text"); ?>
+            <?php echo $form->hiddenField($field, "[$num]FID"); ?>
         </div>
     </div>
     <div class="span-6 last">

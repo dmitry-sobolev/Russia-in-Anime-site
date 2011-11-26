@@ -77,15 +77,15 @@ $form = $this->beginWidget('admin.components.CActiveFormExt', array(
     <?php echo $form->error($model, 'original'); ?>
 </div>
 
-<?php $num = 1; ?>
+<?php $num = 0; ?>
 <?php foreach ($model->fields as $field): ?>
+    <?php $num = isset($field->FID) ? $field->FID : $num + 1; ?>
     <?php echo $this->renderPartial('_formField', 
             array(
                 'field' => $field, 
                 'form' => $form,
                 'num' => $num
     )); ?>
-    <?php $num++; ?>
 <?php endforeach; ?>
 
 <div class="row buttons">
