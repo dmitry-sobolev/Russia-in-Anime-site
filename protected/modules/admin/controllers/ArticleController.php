@@ -75,8 +75,6 @@ class ArticleController extends AdminController {
         if (isset($post['Field'])) 
             $fields = $this->getFieldsArray($post, $model->fields);
 
-        $this->saveFieldsArray($fields);
-
         $model->fields = $fields;
     }
 
@@ -91,42 +89,31 @@ class ArticleController extends AdminController {
     }
 
     //TODO: Удаление полей
-    //TODO: Переделать получение массива, чтобы все это сохранялось!
     private function getFieldsArray(&$post, $fields = array()) {
-        foreach ($post['Field'] as $name => $values) {
-            foreach ($values as $fid => $value) {
-                if (!isset($post['delete'][$fid])) {
-                    if (!array_key_exists($fid, $fields)) {
-                        $fields[$fid] = new Field();
-
-                        if (isset($post['Field']['FID'][$fid]) &&
-                                $post['Field']['FID'][$fid] === strval($fid))
-                            $fields[$fid]->isNewRecord = false;
-                    }
-
-                    $fields[$fid]->$name = $value;
+        foreach ($post['Field'] as $fid => $fieldAttributes) {
+            if (isset($fieldAttributes['FID']) && $fieldAttributes['FID'] == $fid) {
+                $i = $this->searchObjectByField($fields, 'FID', $fid);
+                if ($i !== false){
+                    $fields[$i]->attributes = $fieldAttributes;
                 }
+            } else {
+                $field = new Field();
+                $field->attributes = $fieldAttributes;
+               
+                $fields[] = $field;
             }
         }
 
         return $fields;
     }
     
-    private function searchObjectByField(&$array, $fieldName, $fieldValue) {
-        foreach ($array as $field)
-            if ($field->$fieldName === $fieldValue)
-                return $field;
-        return false;
-    }
-
-    private function saveFieldsArray(&$fields) {
-        foreach ($fields as $field) {
-
-            if (!$field->save())
-                throw new CHttpException(500, $field->isNewRecord ?
-                                'Не могу создать поле' :
-                                'Не могу обновить поле');
+    private function searchObjectByField($array, $fieldName, $fieldValue) {
+        foreach ($array as $key => $field) {
+            $tmp = $field->$fieldName;
+            if ($field->$fieldName == strval($fieldValue))
+                return $key;
         }
+        return false;
     }
 
 }
