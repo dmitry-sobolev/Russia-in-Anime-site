@@ -19,15 +19,8 @@ class ArticleController extends AdminController {
     public function actionCreate() {
         $model = new Article();
 
-        if (isset($_POST['Article'])) {
-            
-            $model->attributes = $_POST['Article'];
-
-            $this->fieldsModel($model);
-
-            $this->saveArticle($model, isset($_POST['addField']));
-        }
-
+        $this->formProcessing($model);
+        
         $model->fields = array(new Field());
 
         $this->render('create', array('model' => $model));
@@ -39,13 +32,7 @@ class ArticleController extends AdminController {
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['Article'])) {
-            $model->attributes = $_POST['Article'];
-            
-            $this->fieldsModel($model);
-
-            $this->saveArticle($model, isset($_POST['addField']));
-        }
+        $this->formProcessing($model);
         
         if ($isAddField){
             $fields = $model->fields;
@@ -63,6 +50,16 @@ class ArticleController extends AdminController {
         if ($model === null)
             throw new CHttpException(404, 'Запрошенной страницы не существует');
         return $model;
+    }
+    
+    private function formProcessing(&$model) {
+        if (isset($_POST['Article'])) {
+            $model->attributes = $_POST['Article'];
+            
+            $this->saveArticle($model, isset($_POST['addField']));
+
+            $this->fieldsModel($model);
+        }
     }
 
     private function fieldsModel(&$model) {
