@@ -23,11 +23,9 @@ class ArticleController extends AdminController {
             
             $model->attributes = $_POST['Article'];
 
-            if ($model->save()){
-                $this->fieldsModel($model, $_POST);
+            $this->fieldsModel($model);
 
-                $this->saveArticle($model, isset($_POST['addField']));
-            }
+            $this->saveArticle($model, isset($_POST['addField']));
         }
 
         $model->fields = array(new Field());
@@ -44,11 +42,9 @@ class ArticleController extends AdminController {
         if (isset($_POST['Article'])) {
             $model->attributes = $_POST['Article'];
             
-            if ($model->save()){
-                $this->fieldsModel($model, $_POST);
+            $this->fieldsModel($model);
 
-                $this->saveArticle($model, isset($_POST['addField']));
-            }
+            $this->saveArticle($model, isset($_POST['addField']));
         }
         
         if ($isAddField){
@@ -69,11 +65,13 @@ class ArticleController extends AdminController {
         return $model;
     }
 
-    private function fieldsModel(&$model, &$post) {
+    private function fieldsModel(&$model) {
         $fields = array();
         
-        if (isset($post['Field'])) 
-            $fields = $this->getFieldsArray($post, $model->fields);
+        if (isset($_POST['Field'])) 
+            $fields = $this->getFieldsArray($model->AID, $model->fields);
+
+        $this->saveFieldsArray($fields);
 
         $model->fields = $fields;
     }
@@ -88,13 +86,12 @@ class ArticleController extends AdminController {
             throw new CHttpException(500, 'Не удалось сохранить статью');
     }
 
-    //TODO: Таки, почему она не сохраняет?!
-    private function getFieldsArray(&$post, $fields = array()) {
-        foreach ($post['Field'] as $fid => $fieldAttributes) {
+    private function getFieldsArray($articleId, $fields = array()) {
+        foreach ($_POST['Field'] as $fid => $fieldAttributes) {
             if (isset($fieldAttributes['FID']) && $fieldAttributes['FID'] == $fid) {
                 $i = $this->searchObjectByField($fields, 'FID', $fid);
                 
-                if (isset($post['delete'][$fid])) {
+                if (isset($_POST['delete'][$fid])) {
                     Field::model()->deleteByPk($fid);
                     unset ($fields[$i]);
                     $i = false;
@@ -106,6 +103,7 @@ class ArticleController extends AdminController {
             } else {
                 $field = new Field();
                 $field->attributes = $fieldAttributes;
+                $field->article = $articleId;
                
                 $fields[] = $field;
             }
@@ -121,6 +119,16 @@ class ArticleController extends AdminController {
                 return $key;
         }
         return false;
+    }
+
+    private function saveFieldsArray(&$fields) {
+        foreach ($fields as $field) {
+
+            if (!$field->save())
+                throw new CHttpException(500, $field->isNewRecord ?
+                                'Не могу создать поле' :
+                                'Не могу обновить поле');
+        }
     }
 
 }
