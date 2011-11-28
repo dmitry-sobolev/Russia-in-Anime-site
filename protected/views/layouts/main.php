@@ -23,9 +23,7 @@ $clientScript->registerCssFile(Yii::app()->baseUrl . '/css/style.css');
                 ?>
             </div>
             <div class="content-holder">
-                <div class="content">
-                    <?php echo $content; ?>
-                </div>
+                <?php echo $content; ?>
             </div>
         </div>
         <div class="footer container">

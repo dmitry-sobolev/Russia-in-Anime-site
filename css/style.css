@@ -48,6 +48,7 @@ body {
 .footer {
     background: url('/rina/images/site/footer.png') no-repeat;
     height: 109px;
+    overflow: hidden;
 }
 
 .footer-content {
