@@ -1,0 +1,57 @@
+/*
+ *TODO: при переносе сайта убрать из URL'ов '/rina'!
+ */
+
+html, body {
+    font: 13px Verdana, Arial, sans-serif;
+    height: 100%;
+}
+
+body {
+    background: url('/rina/images/site/background_wood.jpg');
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 700px;
+}
+
+.wrapper {
+    background: url('/rina/images/site/background_paper.jpg');
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin-bottom: -109px;
+}
+
+/**** Header ***/
+.header {
+    height: 106px;
+    margin-left: -3px;
+    position: relative;
+}
+
+.header .medal {
+    position: absolute;
+    right: -10px;
+    top: 0;
+}
+
+/**** Content ****/
+.content {
+    margin: 0 auto;
+    width: 500px;
+}
+
+/**** Footer ****/
+.footer {
+    background: url('/rina/images/site/footer.png') no-repeat;
+    height: 109px;
+}
+
+.footer-content {
+    margin: 0 auto;
+    padding-top: 30px;
+    width: 350px;
+}

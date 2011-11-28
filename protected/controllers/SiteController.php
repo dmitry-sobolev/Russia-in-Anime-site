@@ -1,8 +1,8 @@
 <?php
 
-Yii::import("ext.xupload.models.XUploadForm");
-
 class SiteController extends Controller {
+    
+    public $layout = '//layouts/main';
 
     public function actions() {
         return array(
@@ -21,9 +21,7 @@ class SiteController extends Controller {
     public function actionIndex() {
         // renders the view file 'protected/views/site/index.php'
         // using the default layout 'protected/views/layouts/main.php'
-        $model = new XUploadForm;
         $this->render('index', array(
-            'model' => $model,
         ));
     }
 
