@@ -1,16 +1,16 @@
 <?php
 $this->breadcrumbs=array(
         'Главная'=>array('default/index'),
-	'Tags',
+	'Теги',
 );
 
 $this->menu=array(
-	array('label'=>'Create Tags', 'url'=>array('create')),
-	array('label'=>'Manage Tags', 'url'=>array('admin')),
+	array('label'=>'Добавить тег', 'url'=>array('create')),
+	array('label'=>'Найти тег', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Tags</h1>
+<h1>Список тегов</h1>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
