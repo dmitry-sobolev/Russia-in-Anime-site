@@ -468,9 +468,13 @@ $(\'#div\' + i).hide();
 
             echo CHtml::Link(
                     is_string($this->showAddButton) ?
-                            $this->showAddButton : 'New', array(
-                $this->_relatedModel->tableSchema->name . "/" . $this->createAction,
-                'returnTo' => $this->returnLink));
+                            $this->showAddButton : 
+                            'New', 
+                    array(
+                        $this->_relatedModel->tableSchema->name . "/" . $this->createAction,
+                        'returnTo' => $this->returnLink,
+                    ), 
+                    array('target' => '_blank'));
         }
     }
 

@@ -71,7 +71,7 @@ class Tags extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'TID' => 'Номер',
+			'TID' => 'Номер в БД',
 			'title' => 'Название',
 		);
 	}

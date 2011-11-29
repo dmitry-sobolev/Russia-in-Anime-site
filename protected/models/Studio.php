@@ -71,7 +71,7 @@ class Studio extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'SID' => 'Номер',
+			'SID' => 'Номер в БД',
 			'title' => 'Название',
 		);
 	}

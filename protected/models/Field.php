@@ -82,7 +82,7 @@ class Field extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'FID' => 'Номер',
+			'FID' => 'Номер в БД',
 			'picturePreview' => 'Картинка в превью',
 			'textPreview' => 'Текст превью',
 			'text' => 'Текст',

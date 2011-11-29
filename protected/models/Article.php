@@ -85,7 +85,7 @@ class Article extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'AID' => 'Номер',
+			'AID' => 'Номер в БД',
 			'titleMain' => 'Название',
 			'titleAdd' => 'Альтернативное название',
 			'titleRus' => 'Русское название',
