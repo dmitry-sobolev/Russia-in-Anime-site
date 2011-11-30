@@ -474,7 +474,7 @@ $(\'#div\' + i).hide();
                         $this->_relatedModel->tableSchema->name . "/" . $this->createAction,
                         'returnTo' => $this->returnLink,
                     ), 
-                    array('target' => '_blank'));
+                    array('target' => '_blank', 'class' => 'button'));
         }
     }
 

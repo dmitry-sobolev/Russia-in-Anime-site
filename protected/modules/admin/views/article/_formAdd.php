@@ -45,7 +45,18 @@ $form = $this->beginWidget('admin.components.CActiveFormExt', array(
 
     <div class="row">
         <?php echo $form->labelEx($model, 'format'); ?>
-        <?php echo $form->dropDownList($model, 'format', array('ova' => 'OVA', 'tv' => 'Сериал', 'movie' => 'Фильм',)) ?>
+        <?php // echo $form->dropDownList($model, 'format', array('ova' => 'OVA', 'tv' => 'Сериал', 'movie' => 'Фильм',)) ?>
+        <?php $this->widget('admin.components.Relation', array(
+            'model' => 'Article',
+            'relation' => 'format0',
+            'relatedPk' => 'FtID',
+            'parentObjects' => $model->format0,
+            'fields' => 'title',
+            'showAddButton' => false,
+            'htmlOptions' => array(
+                'options' => array($model->format => array('selected' => true)),
+            ),
+        )); ?>
         <?php echo $form->textField($model, 'episodeNum', array('size' => 5, 'maxlength' => 5)); ?> серий
         <?php echo $form->error($model, 'format'); ?>
         <?php echo $form->error($model, 'episodeNum'); ?>
@@ -75,10 +86,54 @@ $form = $this->beginWidget('admin.components.CActiveFormExt', array(
     </div>
 
     <div class="row">
+        <?php echo $form->labelEx($model, 'scriptWriter'); ?>
+        <?php echo $form->textField($model, 'scriptWriter', array('size' => 45, 'maxlength' => 45)); ?>
+        <?php echo $form->error($model, 'scriptWriter'); ?>
+    </div>
+
+    <div class="row">
+        <?php echo $form->labelEx($model, 'originalRole'); ?>
+        <?php $this->widget('admin.components.Relation', array(
+            'model' => 'Article',
+            'relation' => 'originalRole0',
+            'relatedPk' => 'ORID',
+            'parentObjects' => $model->originalRole0,
+            'fields' => 'title',
+            'showAddButton' => false,
+            'htmlOptions' => array(
+                'options' => array($model->originalRole => array('selected' => true)),
+            ),
+        )); ?>
+        <?php echo $form->error($model, 'originalRole'); ?>
+    </div>
+
+    <div class="row">
         <?php echo $form->labelEx($model, 'original'); ?>
         <?php echo $form->textField($model, 'original', array('size' => 45, 'maxlength' => 200)); ?>
         <?php echo $form->error($model, 'original'); ?>
     </div>
+    
+    <div class="row">
+        <?php $pictureArray = array(); ?>
+        <?php foreach ($model->fields as $field): ?>
+            <?php $pictureArray = array_merge($pictureArray, $field->pictures); ?>
+        <?php endforeach; ?>
+        
+        <?php echo $form->labelEx($model, 'pictureMain'); ?>
+        <?php $this->widget('admin.components.Relation', array(
+            'model' => 'Article',
+            'relation' => 'pictureMain0',
+            'relatedPk' => 'PID',
+            'parentObjects' => $pictureArray,
+            'fields' => 'title',
+            'showAddButton' => false,
+            'htmlOptions' => array(
+                'options' => array($model->pictureMain => array('selected' => true)),
+            ),
+        )); ?>
+        <?php echo $form->error($model, 'originalRole'); ?>
+    </div>
+
 </fieldset>
     
 <?php $num = 0; ?>
