@@ -2,6 +2,7 @@
     $cs = Yii::app()->clientScript;
     $baseUrl = $this->module->assetsUrl;
     $cs->registerCssFile(Yii::app()->request->baseUrl.'/css/screen.css', 'screen');
+    $cs->registerCssFile(Yii::app()->request->baseUrl.'/css/buttons/screen.css', 'screen');
     $cs->registerCssFile(Yii::app()->request->baseUrl.'/css/print.css', 'print');
     $cs->registerCssFile(Yii::app()->request->baseUrl.'/css/form.css');
     $cs->registerCssFile($baseUrl.'/css/style.css');
@@ -23,12 +24,11 @@
                     $this->widget('zii.widgets.CMenu', array(
                         'items' => array(
                             array('label' => 'Главная', 'url'=>array('default/index')),
-                            array('label' => 'Добавить статью', 'url'=>array('article/create')),
-                            array('label' => 'Найти сатью', 'url' => array('article/admin')),
-                            array('label' => 'Добавить тег', 'url' => array('tags/create')),
-                            array('label' => 'Операции с тегами', 'url' => array('tags/admin')),
-                            array('label' => 'Добавить студию', 'url' => array('studio/create')),
-                            array('label' => 'Найти студию', 'url' => array('studio/admin')),
+                            array('label' => 'Статьи', 'url' => array('article/admin')),
+                            array('label' => 'Теги', 'url' => array('tags/admin')),
+                            array('label' => 'Студии', 'url' => array('studio/admin')),
+                            array('label' => 'Новости', 'url' => array('news/admin')),
+                            array('label' => 'Участники', 'url' => array('members/admin')),
                         ),
                     ));
                     ?>

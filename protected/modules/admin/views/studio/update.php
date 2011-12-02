@@ -7,10 +7,9 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Список студий', 'url'=>array('index')),
+	array('label'=>'Студии', 'url'=>array('admin')),
 	array('label'=>'Добавить студию', 'url'=>array('create')),
 	array('label'=>'Просмотр студии', 'url'=>array('view', 'id'=>$model->SID)),
-	array('label'=>'Поиск студии', 'url'=>array('admin')),
 );
 ?>
 

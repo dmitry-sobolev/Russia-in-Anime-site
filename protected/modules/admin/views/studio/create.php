@@ -6,8 +6,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Список студий', 'url'=>array('index')),
-	array('label'=>'Поиск студии', 'url'=>array('admin')),
+	array('label'=>'Студии', 'url'=>array('admin')),
 );
 ?>
 

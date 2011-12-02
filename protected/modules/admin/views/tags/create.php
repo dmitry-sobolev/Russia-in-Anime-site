@@ -6,8 +6,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Список тегов', 'url'=>array('index')),
-	array('label'=>'Поиск тегов', 'url'=>array('admin')),
+	array('label'=>'Теги', 'url'=>array('admin')),
 );
 ?>
 

@@ -7,7 +7,7 @@
         <?php endif; ?>
     </div>
 
-    <h2>Поле <?php echo $num; ?></h2>
+    <h2>Поле <?php //echo $num; ?></h2>
 
     <div class="span-13">
         <div class="row">
@@ -19,7 +19,7 @@
             <?php 
             
             $this->widget('admin.components.Relation', array(
-                'model' => "Field",
+                'model' => $field,
                 'relation' => 'tags',
                 'relatedPk' => 'TID',
                 'showAddButton' => false,
@@ -34,7 +34,7 @@
         <div class="row">
             <?php echo $form->labelEx($field, "[$num]picturePreview"); ?>
             <?php $this->widget('admin.components.Relation', array(
-                'model' => "Field",
+                'model' => $field,
                 'relation' => 'picturePreview0',
                 'showAddButton' => false,
                 'fields' => 'title',
@@ -61,7 +61,7 @@
         </div>
     </div>
     <div class="span-6 last">
-        <h3>Картинки</h3>
+        <h3>Кадры</h3>
         <div class="image-items">
             <?php foreach ($field->pictures as $picture): ?>
             <div class="image">

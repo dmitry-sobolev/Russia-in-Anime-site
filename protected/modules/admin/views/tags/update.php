@@ -7,10 +7,9 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Список тегов', 'url'=>array('index')),
+	array('label'=>'Теги', 'url'=>array('admin')),
 	array('label'=>'Добавить тег', 'url'=>array('create')),
 	array('label'=>'Просмтр тега', 'url'=>array('view', 'id'=>$model->TID)),
-	array('label'=>'Поиск тегов', 'url'=>array('admin')),
 );
 ?>
 

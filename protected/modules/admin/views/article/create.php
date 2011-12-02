@@ -6,7 +6,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Поиск статьи', 'url'=>array('admin')),
+	array('label'=>'Статьи', 'url'=>array('admin')),
 );
 ?>
 <h1>Добавить статью</h1>

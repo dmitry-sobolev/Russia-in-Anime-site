@@ -1,4 +1,25 @@
 <div class="form">
+    
+<?php
+    Yii::app()->clientScript->registerCssFile(Yii::app()->baseUrl.'/css/chosen.css');
+    Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/chosen/chosen.jquery.min.js');
+    Yii::app()->clientScript->registerScript('chosen-init', "
+$(document).ready(function(){
+    function showEpisodeNum() {
+        if ($('#Article_format option:selected').val() == 1 || $('#Article_format option:selected').val() == 2)
+            $('#id_episode_num').css('visibility', 'visible');
+        else
+            $('#id_episode_num').css('visibility', 'hidden');
+    }
+
+    $('select[multiple]').chosen();
+    showEpisodeNum();
+    $('#Article_format').change(function(){
+        showEpisodeNum();
+    });
+});
+");
+?>
 
 <?php
 $form = $this->beginWidget('admin.components.CActiveFormExt', array(
@@ -38,6 +59,12 @@ $form = $this->beginWidget('admin.components.CActiveFormExt', array(
     </div>
 
     <div class="row">
+        <?php echo $form->labelEx($model, 'year'); ?>
+        <?php echo $form->textField($model, 'year', array('size' => 4, 'maxlength' => 4)); ?>
+        <?php echo $form->error($model, 'year'); ?>
+    </div>
+
+    <div class="row">
         <?php echo $form->labelEx($model, 'timeTag'); ?>
         <?php echo $form->textField($model, 'timeTag', array('size' => 45, 'maxlength' => 15)); ?>
         <?php echo $form->error($model, 'timeTag'); ?>
@@ -45,19 +72,19 @@ $form = $this->beginWidget('admin.components.CActiveFormExt', array(
 
     <div class="row">
         <?php echo $form->labelEx($model, 'format'); ?>
-        <?php // echo $form->dropDownList($model, 'format', array('ova' => 'OVA', 'tv' => 'Сериал', 'movie' => 'Фильм',)) ?>
         <?php $this->widget('admin.components.Relation', array(
-            'model' => 'Article',
+            'model' => $model,
             'relation' => 'format0',
             'relatedPk' => 'FtID',
-            'parentObjects' => $model->format0,
             'fields' => 'title',
             'showAddButton' => false,
             'htmlOptions' => array(
                 'options' => array($model->format => array('selected' => true)),
             ),
         )); ?>
-        <?php echo $form->textField($model, 'episodeNum', array('size' => 5, 'maxlength' => 5)); ?> серий
+        <span id="id_episode_num" style="visibility: hidden;">
+            <?php echo $form->textField($model, 'episodeNum', array('size' => 5, 'maxlength' => 5)); ?> серий
+        </span>
         <?php echo $form->error($model, 'format'); ?>
         <?php echo $form->error($model, 'episodeNum'); ?>
     </div>
@@ -65,10 +92,9 @@ $form = $this->beginWidget('admin.components.CActiveFormExt', array(
     <div class="row">
         <?php echo $form->labelEx($model, 'studio'); ?>
         <?php $this->widget('admin.components.Relation', array(
-            'model' => 'Article',
+            'model' => $model,
             'relation' => 'studio0',
             'relatedPk' => 'SID',
-            'parentObjects' => $model->studio,
             'fields' => 'title',
             'allowEmpty' => true,
             'showAddButton' => '+',
@@ -76,7 +102,6 @@ $form = $this->beginWidget('admin.components.CActiveFormExt', array(
                 'options' => array($model->studio => array('selected' => true)),
             ),
         )); ?>
-        <?php //echo $form->errorSummary($model, 'studio'); ?>
     </div>
 
     <div class="row">
@@ -94,10 +119,9 @@ $form = $this->beginWidget('admin.components.CActiveFormExt', array(
     <div class="row">
         <?php echo $form->labelEx($model, 'originalRole'); ?>
         <?php $this->widget('admin.components.Relation', array(
-            'model' => 'Article',
+            'model' => $model,
             'relation' => 'originalRole0',
             'relatedPk' => 'ORID',
-            'parentObjects' => $model->originalRole0,
             'fields' => 'title',
             'showAddButton' => false,
             'htmlOptions' => array(
@@ -121,7 +145,7 @@ $form = $this->beginWidget('admin.components.CActiveFormExt', array(
         
         <?php echo $form->labelEx($model, 'pictureMain'); ?>
         <?php $this->widget('admin.components.Relation', array(
-            'model' => 'Article',
+            'model' => $model,
             'relation' => 'pictureMain0',
             'relatedPk' => 'PID',
             'parentObjects' => $pictureArray,
@@ -130,6 +154,24 @@ $form = $this->beginWidget('admin.components.CActiveFormExt', array(
             'htmlOptions' => array(
                 'options' => array($model->pictureMain => array('selected' => true)),
             ),
+        )); ?>
+        <?php echo $form->error($model, 'pictureMain'); ?>
+    </div>
+
+    <div class="row">
+        <?php $pictureArray = array(); ?>
+        <?php foreach ($model->fields as $field): ?>
+            <?php $pictureArray = array_merge($pictureArray, $field->pictures); ?>
+        <?php endforeach; ?>
+        
+        <?php echo $form->labelEx($model, 'members'); ?>
+        <?php $this->widget('admin.components.Relation', array(
+            'model' => $model,
+            'relation' => 'members',
+            'relatedPk' => 'MID',
+            'fields' => 'name',
+            'style' => 'listBox',
+            'showAddButton' => false,
         )); ?>
         <?php echo $form->error($model, 'originalRole'); ?>
     </div>

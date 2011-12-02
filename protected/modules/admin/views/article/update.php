@@ -7,10 +7,9 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Список статей', 'url'=>array('index')),
+	array('label'=>'Cтатьи', 'url'=>array('admin')),
 	array('label'=>'Добавить статью', 'url'=>array('create')),
 	array('label'=>'Просмотр статьи', 'url'=>array('view', 'id'=>$model->AID)),
-	array('label'=>'Поиск статьи', 'url'=>array('admin')),
 );
 ?>
 

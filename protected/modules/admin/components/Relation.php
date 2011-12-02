@@ -264,17 +264,23 @@ class Relation extends CWidget {
      * Retrieves the Assigned Objects of the MANY_MANY related Table
      */
     public function getAssignedObjects() {
-        $id = $this->_model->tableSchema->primaryKey;
-        if (!$this->_model->$id)
-            return array();
+//        $id = $this->_model->tableSchema->primaryKey;
+//        if (!$this->_model->$id)
+//            return array();
 
-        $sql = sprintf("select * from %s where %s = %s", $this->manyManyTable, $this->manyManyTableLeft, $this->_model->{$this->_model->tableSchema->primaryKey});
-
-        $result = Yii::app()->db->createCommand($sql)->queryAll();
-
-        foreach ($result as $foreignObject) {
-            $id = $foreignObject[$this->manyManyTableRight];
-            $objects[$id] = $this->_relatedModel->findByPk($id);
+//        $sql = sprintf("select * from %s where %s = %s", $this->manyManyTable, $this->manyManyTableLeft, $this->_model->{$this->_model->tableSchema->primaryKey});
+//
+//        $result = Yii::app()->db->createCommand($sql)->queryAll();
+//
+//        foreach ($result as $foreignObject) {
+//            $id = $foreignObject[$this->manyManyTableRight];
+//            $objects[$id] = $this->_relatedModel->findByPk($id);
+//        }
+        $objects = array();
+        
+        foreach ($this->_model->{$this->relation} as $assignedRelation) {
+            $assignedId = $assignedRelation->{$this->relatedPk};
+            $objects[$assignedId] = $assignedRelation;
         }
 
         return isset($objects) ? $objects : array();
