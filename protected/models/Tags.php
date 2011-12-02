@@ -89,6 +89,8 @@ class Tags extends CActiveRecord
 
 		$criteria->compare('TID',$this->TID);
 		$criteria->compare('title',$this->title,true);
+                
+                $criteria->order = 'title';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

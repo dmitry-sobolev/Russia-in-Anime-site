@@ -50,6 +50,7 @@ class Members extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+                    'articles' => array(self::MANY_MANY, 'Article', 'tbl_article_members(MID, AID)'),
 		);
 	}
 
@@ -59,8 +60,8 @@ class Members extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'MID' => 'Mid',
-			'name' => 'Name',
+			'MID' => 'Номер в БД',
+			'name' => 'Имя',
 		);
 	}
 

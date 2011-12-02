@@ -55,13 +55,15 @@ class Article extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('titleMain, titleAdd, timeTag', 'required'),
-            array('format, episodeNum, studio, pictureMain, originalRole', 'numerical', 'integerOnly' => true),
+            array('format, episodeNum, year, studio, pictureMain, originalRole', 'numerical', 'integerOnly' => true),
             array('titleMain, titleAdd, titleRus, scriptWriter', 'length', 'max' => 100),
+//            array('timeTag', 'date', 'format' => 'yyyy-MMddHH'),
             array('director', 'length', 'max' => 45),
             array('original', 'length', 'max' => 200),
+            array('year', 'length', 'max' => 4),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('AID, titleMain, titleAdd, titleRus, timeTag, format, episodeNum, studio, director, original, pictureMain, scriptWriter, originalRole', 'safe', 'on' => 'search'),
+            array('AID, titleMain, titleAdd, titleRus, year, timeTag, format, episodeNum, studio, director, original, pictureMain, scriptWriter, originalRole', 'safe', 'on' => 'search'),
         );
     }
 
@@ -77,6 +79,7 @@ class Article extends CActiveRecord {
             'pictureMain0' => array(self::BELONGS_TO, 'Pictures', 'pictureMain'),
             'studio0' => array(self::BELONGS_TO, 'Studio', 'studio'),
             'fields' => array(self::HAS_MANY, 'Field', 'article'),
+            'members' => array(self::MANY_MANY, 'Members', 'tbl_article_members(AID, MID)'),
         );
     }
 
@@ -89,6 +92,7 @@ class Article extends CActiveRecord {
             'titleMain' => 'Название',
             'titleAdd' => 'Альтернативное название',
             'titleRus' => 'Русское название',
+            'year' => 'Год выпуска',
             'timeTag' => 'Time Tag',
             'format' => 'Формат',
             'episodeNum' => 'Серий',
@@ -97,7 +101,8 @@ class Article extends CActiveRecord {
             'original' => 'Автор оригинала',
             'pictureMain' => 'Картинка',
             'scriptWriter' => 'Сценарист',
-            'originalRole' => 'Тип оригинала',
+            'originalRole' => 'Снято по',
+            'members' => 'Участники',
         );
     }
 
@@ -115,6 +120,7 @@ class Article extends CActiveRecord {
         $criteria->compare('titleMain', $this->titleMain, true);
         $criteria->compare('titleAdd', $this->titleAdd, true);
         $criteria->compare('titleRus', $this->titleRus, true);
+        $criteria->compare('year', $this->year, true);
         $criteria->compare('timeTag', $this->timeTag, true);
         $criteria->compare('format', $this->format);
         $criteria->compare('episodeNum', $this->episodeNum);
@@ -125,6 +131,8 @@ class Article extends CActiveRecord {
         $criteria->compare('scriptWriter', $this->scriptWriter, true);
         $criteria->compare('originalRole', $this->originalRole);
 
+        $criteria->order = 'titleMain';
+        
         return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
                 ));

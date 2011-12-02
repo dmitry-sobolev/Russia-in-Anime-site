@@ -89,6 +89,8 @@ class Studio extends CActiveRecord
 
 		$criteria->compare('SID',$this->SID);
 		$criteria->compare('title',$this->title,true);
+                
+                $criteria->order = 'title';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
