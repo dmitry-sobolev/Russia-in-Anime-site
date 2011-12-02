@@ -9,6 +9,7 @@ $clientScript->registerCssFile(Yii::app()->baseUrl . '/css/style.css');
     <head>
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="icon" href="<?php echo Yii::app()->baseUrl; ?>/images/site/favicon.ico">
     </head>
     <body>
         <div class="wrapper container">

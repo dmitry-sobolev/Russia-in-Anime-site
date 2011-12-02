@@ -26,7 +26,7 @@ div.form label {
 }
 
 div.form select {
-    width: 150px;
+    width: 230px;
 }
 
 .error {
@@ -78,4 +78,11 @@ div.field .delete label {
     position: absolute;
     right: 0;
     top: 0;
+}
+
+.button {
+    display: inline-block !important;
+    float: none !important;
+    margin: 0.2em 0 0.5em 2px !important;
+    padding: 1px 5px !important;
 }
