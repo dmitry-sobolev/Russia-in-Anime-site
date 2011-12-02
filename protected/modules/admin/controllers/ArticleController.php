@@ -75,8 +75,8 @@ class ArticleController extends AdminController {
     public function actionAdmin() {
         $model = new Article('search');
         $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['Studio']))
-            $model->attributes = $_GET['Studio'];
+        if (isset($_GET['Article']))
+            $model->attributes = $_GET['Article'];
 
         $this->render('admin', array(
             'model' => $model,
@@ -103,8 +103,6 @@ class ArticleController extends AdminController {
 
             $this->fieldsModel($model);
 
-            $this->processingImages();
-
             if ($isAddField)
                 $this->redirect(array('update', 'id' => $model->AID, 'isAddField' => true,));
             else
@@ -124,61 +122,67 @@ class ArticleController extends AdminController {
         $model->fields = $fields;
     }
 
-    private function processingImages() {
-        if (isset($_FILES['Pictures'])) {
-
-            foreach ($_FILES['Pictures']['error'] as $key => $value) {
-                if ($value === 0) {
-
-                    $dir = 'images/upload/fieldAttachments/';
-                    $path = Yii::app()->basePath . '/../' . $dir;
-                    $url = Yii::app()->baseUrl . '/' . $dir . $key . '/';
-
-                    if (!is_dir($path))
-                        throw new CHttpException(500, 'Нет директории для загрузки картинок');
-
-                    $path .= $key;
-
-                    $this->saveImagesOnServer($key, $path);
-                    $this->saveImageInDb($key, $url);
-                }
-            }
-        }
-    }
-
-    private function getFieldsArray($articleId, $fields = array()) {
+    private function getFieldsArray($articleId, $fieldsOld = array()) {
+        $fields = array();
         foreach ($_POST['Field'] as $fid => $fieldAttributes) {
+            $i = false;
+            
             if (isset($fieldAttributes['FID']) && $fieldAttributes['FID'] == $fid) {
-                $i = $this->searchObjectByField($fields, 'FID', $fid);
+                $i = $this->searchObjectByField($fieldsOld, 'FID', $fid);
 
                 if (isset($_POST['delete'][$fid])) {
                     Field::model()->deleteByPk($fid);
-                    unset($fields[$i]);
-                    $i = false;
+                    unset($fieldsOld[$i]);
+                    
+                    continue;
                 }
-
-                if ($i !== false) {
-                    $fields[$i]->attributes = $fieldAttributes;
-                }
+                
+                $fields[$fid] = $fieldsOld[$i];
             } else {
-                $field = new Field();
-                $field->attributes = $fieldAttributes;
-                $field->article = $articleId;
-
-                $fields[] = $field;
+                $fields[$fid] = new Field ();
+                $fields[$fid]->article = $articleId;
             }
+            
+            $fields[$fid]->attributes = $fieldAttributes;
+
+            if (isset($fieldAttributes['tags']))
+                $fields[$fid]->tags = $fieldAttributes['tags'];
         }
 
         return $fields;
     }
 
     private function saveFieldsArray(&$fields) {
-        foreach ($fields as $field) {
+        foreach ($fields as $fid => $field) {
 
-            if (!$field->save())
+            if (!$field->save()) {
                 throw new CHttpException(500, $field->isNewRecord ?
                                 'Не могу создать поле' :
                                 'Не могу обновить поле');
+            } else {
+                $this->saveImage($field, $fid);
+            }
+        }
+    }
+
+    private function saveImage(&$field, $key) {
+        if (isset($_FILES['Pictures'])) {
+
+            if ($_FILES['Pictures']['error'][strval($key)] === 0) {
+
+                $fieldId = $field->FID;
+                $dir = 'images/upload/fieldAttachments/';
+                $path = Yii::app()->basePath . '/../' . $dir;
+                $url = Yii::app()->baseUrl . '/' . $dir . $fieldId . '/';
+
+                if (!is_dir($path))
+                    throw new CHttpException(500, 'Нет директории для загрузки картинок');
+
+                $path .= $fieldId;
+
+                $this->saveImagesOnServer($key, $path);
+                $this->saveImageInDb($key, $fieldId, $url);
+            }
         }
     }
 
@@ -200,15 +204,15 @@ class ArticleController extends AdminController {
         $image->saveAs($path . '/' . $image->name);
     }
 
-    private function saveImageInDb($key, $url = '') {
+    private function saveImageInDb($key, $fieldId, $url = '') {
         $imageAttributes = array(
             'path' => $url,
-            'title' => $_FILES['Pictures'][$key],
+            'title' => $_FILES['Pictures']['name'][$key],
         );
 
         $picture = new Pictures();
         $picture->attributes = $imageAttributes;
-        $picture->fields = array($key);
+        $picture->fields = array($fieldId);
 
         if (!$picture->save())
             throw new CHttpException(500, 'Не могу добавить картинку');
